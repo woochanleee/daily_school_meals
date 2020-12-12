@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 import { config } from 'dotenv';
 import { resolve } from 'path';
 
-config({ path: resolve(__dirname, '../.env') });
+config({ path: resolve(process.cwd(), '.env') });
 
 const { GH_TOKEN, GIST_ID } = process.env;
 

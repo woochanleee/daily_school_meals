@@ -945,7 +945,7 @@ var rest_1 = __webpack_require__(889);
 var node_fetch_1 = __webpack_require__(454);
 var dotenv_1 = __webpack_require__(63);
 var path_1 = __webpack_require__(622);
-dotenv_1.config({ path: path_1.resolve(__dirname, '../.env') });
+dotenv_1.config({ path: path_1.resolve(process.cwd(), '.env') });
 var _a = process.env, GH_TOKEN = _a.GH_TOKEN, GIST_ID = _a.GIST_ID;
 var getFormatDate = function (date) {
     var year = date.getFullYear();
