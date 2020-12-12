@@ -57,7 +57,7 @@ async function getMeal() {
       break;
     }
 
-    const MAX_ONE_LINE_LENGTH = 39;
+    const MAX_ONE_LINE_LENGTH = 30;
     let count = 0;
 
     while ((match = menuRegExp.exec(mealServiceDietInfo[1].row[i].DDISH_NM))) {
