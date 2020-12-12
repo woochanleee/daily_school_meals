@@ -11,10 +11,10 @@ const getFormatDate = (date: Date) => {
   return [year, month, day].join('');
 };
 
-// 시도교육청코드
+// 시도교육청코드 ex) 대전: G10
 const ATPT_OFCDC_SC_CODE = 'G10';
 
-// 표준학교코드
+// 표준학교코드 ex) 대덕소프트웨어마이스터고등학교: 7430310
 const SD_SCHUL_CODE = '7430310';
 
 // 급식일자

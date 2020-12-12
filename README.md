@@ -25,7 +25,8 @@
 
 ## Overview
 
-This project uses [@octokit/rest API](https://github.com/octokit/rest.js/)to write into the gist.
+This project uses [@octokit/rest API](https://github.com/octokit/rest.js/)to write into the gist.  
+Synchronized at 00:00 time every day.
 
 ## Setup
 
@@ -41,9 +42,30 @@ This project uses [@octokit/rest API](https://github.com/octokit/rest.js/)to wri
 1. Open the "Actions" tab of your fork and click the "enable" button
 1. Edit the [environment variable](https://github.com/maxam2017/productive-box/blob/master/.github/workflows/schedule.yml#L17-L18) in `.github/workflows/schedule.yaml`:
 
-   - **GIST_ID:** The ID portion from your gist url: `https://gist.github.com/woochanleee/`**`https://gist.github.com/woochanleee/fcdc51abe32b2ccf38b74f7229571da2`**.
+   - **GIST_ID:** The ID portion from your gist url:
+   - ex) **fcdc51abe32b2ccf38b74f7229571da2**
+   - your gist site **`https://gist.github.com/woochanleee/fcdc51abe32b2ccf38b74f7229571da2`**
 
 1. Go to the repo **Settings > Secrets**
 1. Add the following environment variables:
    - **GH_TOKEN:** The GitHub token generated above.
 1. [Pin the newly created Gist](https://help.github.com/en/github/setting-up-and-managing-your-github-profile/pinning-items-to-your-profile)
+
+## Custom Your School Meal
+
+### Find your school code
+
+- Open this site -> [https://open.neis.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=OPEN17320190722180924242823&infSeq=1](https://open.neis.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=OPEN17320190722180924242823&infSeq=1)
+- Search Your School.
+- ![](./docs/school_code.png)
+- Memorize **시도교육청코드**, **표준학교코드**
+
+### Edit `src/index.ts`
+
+- At 15 Line ~ 18 Line.
+- As you can see comment in code.
+- Change value using that you memorized code at prev stage.
+
+### Finish
+
+If you followed well, it would have been modified to your school.
