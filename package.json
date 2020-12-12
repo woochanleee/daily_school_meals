@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@octokit/rest": "^18.0.12",
+    "moment-timezone": "^0.5.32",
     "node-fetch": "^2.6.1"
   }
 }

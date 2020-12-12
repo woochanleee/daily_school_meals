@@ -2,6 +2,7 @@ import { Octokit } from '@octokit/rest';
 import fetch from 'node-fetch';
 import { config } from 'dotenv';
 import { resolve } from 'path';
+import * as moment from 'moment-timezone';
 
 config({ path: resolve(process.cwd(), '.env') });
 
@@ -12,14 +13,6 @@ const {
   DINNER_GIST_ID,
 } = process.env;
 
-const getFormatDate = (date: Date) => {
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const day = date.getDate().toString().padStart(2, '0');
-
-  return [year, month, day].join('');
-};
-
 // 시도교육청코드 ex) 대전: G10
 const ATPT_OFCDC_SC_CODE = 'G10';
 
@@ -27,7 +20,7 @@ const ATPT_OFCDC_SC_CODE = 'G10';
 const SD_SCHUL_CODE = '7430310';
 
 // 급식일자
-const MLSV_YMD = getFormatDate(new Date());
+const MLSV_YMD = moment.tz('Asia/Seoul').format('YYYYMMDD');
 
 const octokit = new Octokit({
   auth: GH_TOKEN,
