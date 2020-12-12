@@ -999,10 +999,7 @@ var MLSV_YMD = getFormatDate(new Date());
                         break;
                     }
                     while ((match = menuRegExp.exec(mealServiceDietInfo[1].row[i].DDISH_NM))) {
-                        if ((result[i] + match.groups.menu + ',').length > 31) {
-                            result[i] += '\n';
-                        }
-                        result[i] += match.groups.menu + ', ';
+                        result[i] += match.groups.menu + ',';
                     }
                 }
                 return [4 /*yield*/, octokit.gists.update({
