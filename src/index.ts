@@ -6,7 +6,6 @@ import { resolve } from 'path';
 config({ path: resolve(__dirname, '../.env') });
 
 const { GH_TOKEN, GIST_ID } = process.env;
-console.log(GH_TOKEN);
 
 const getFormatDate = (date: Date) => {
   const year = date.getFullYear();
