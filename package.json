@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --watch src --delay 1 --exec ts-node src/index.ts",
-    "build": "ts-node src/index.ts --outDir dist"
+    "build": "tsc src/index.ts --outDir dist && ncc build dist/index.js -o dist"
   },
   "repository": {
     "type": "git",
@@ -18,9 +18,11 @@
   },
   "homepage": "https://github.com/woochanleee/daily_school_meals#readme",
   "devDependencies": {
-    "@types/node": "^8.0.29",
+    "@types/node": "^14.14.12",
+    "@zeit/ncc": "^0.22.3",
     "nodemon": "^2.0.6",
-    "ts-node": "^8.10.2"
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
   },
   "dependencies": {
     "@octokit/rest": "^18.0.12",
