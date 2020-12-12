@@ -1,0 +1,9 @@
+name: daily_school_meals
+author: woochanleee
+description: '여러분의 오늘의 급식은 무엇인가요?'
+branding:
+  icon: 'coffee'
+  color: 'black'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'

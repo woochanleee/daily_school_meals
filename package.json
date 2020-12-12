@@ -5,7 +5,8 @@
   "author": "woochanleee",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --watch src --delay 1 --exec ts-node src/index.ts"
+    "start": "nodemon --watch src --delay 1 --exec ts-node src/index.ts",
+    "build": "ts-node src/index.ts --outDir dist"
   },
   "repository": {
     "type": "git",
