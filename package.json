@@ -1,0 +1,28 @@
+{
+  "name": "daily_school_meals",
+  "version": "1.0.0",
+  "description": "Check your today meal!",
+  "author": "woochanleee",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --watch src --delay 1 --exec ts-node src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/woochanleee/daily_school_meals.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/woochanleee/daily_school_meals/issues"
+  },
+  "homepage": "https://github.com/woochanleee/daily_school_meals#readme",
+  "devDependencies": {
+    "@types/node": "^8.0.29",
+    "nodemon": "^2.0.6",
+    "ts-node": "^8.10.2"
+  },
+  "dependencies": {
+    "@octokit/rest": "^18.0.12",
+    "node-fetch": "^2.6.1"
+  }
+}
