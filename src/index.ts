@@ -3,9 +3,10 @@ import fetch from 'node-fetch';
 import { config } from 'dotenv';
 import { resolve } from 'path';
 
-config({ path: resolve(process.cwd(), '.env') });
+config({ path: resolve(__dirname, '../.env') });
 
 const { GH_TOKEN, GIST_ID } = process.env;
+console.log(GH_TOKEN);
 
 const getFormatDate = (date: Date) => {
   const year = date.getFullYear();
