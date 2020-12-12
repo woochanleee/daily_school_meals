@@ -40,9 +40,12 @@ Synchronized at 00:00 time every day.
 
 1. Fork this repo
 1. Open the "Actions" tab of your fork and click the "enable" button
+1. Create 3 Gist files.
 1. Edit the [environment variable](https://github.com/maxam2017/productive-box/blob/master/.github/workflows/schedule.yml#L17-L18) in `.github/workflows/schedule.yaml`:
 
-   - **GIST_ID:** The ID portion from your gist url:
+   - **BREAKFAST_GIST_ID:** The ID portion from your gist url, breakfast
+   - **LAUNCH_GIST_ID:** The ID portion from your gist url, launch
+   - **DINNER_GIST_ID:** The ID portion from your gist url, dinner
    - ex) **fcdc51abe32b2ccf38b74f7229571da2**
    - your gist site **`https://gist.github.com/woochanleee/fcdc51abe32b2ccf38b74f7229571da2`**
 

@@ -945,8 +945,8 @@ var rest_1 = __webpack_require__(889);
 var node_fetch_1 = __webpack_require__(454);
 var dotenv_1 = __webpack_require__(63);
 var path_1 = __webpack_require__(622);
-dotenv_1.config({ path: path_1.resolve(process.cwd(), '.env') });
-var _a = process.env, GH_TOKEN = _a.GH_TOKEN, GIST_ID = _a.GIST_ID;
+dotenv_1.config({ path: __webpack_require__.ab + ".env" });
+var _a = process.env, GH_TOKEN = _a.GH_TOKEN, BREAKFAST_GIST_ID = _a.BREAKFAST_GIST_ID, LAUNCH_GIST_ID = _a.LAUNCH_GIST_ID, DINNER_GIST_ID = _a.DINNER_GIST_ID;
 var getFormatDate = function (date) {
     var year = date.getFullYear();
     var month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -959,66 +959,141 @@ var ATPT_OFCDC_SC_CODE = 'G10';
 var SD_SCHUL_CODE = '7430310';
 // 급식일자
 var MLSV_YMD = getFormatDate(new Date());
+var octokit = new rest_1.Octokit({
+    auth: GH_TOKEN
+});
+var Meal;
+(function (Meal) {
+    Meal[Meal["\uC544\uCE68"] = 0] = "\uC544\uCE68";
+    Meal[Meal["\uC810\uC2EC"] = 1] = "\uC810\uC2EC";
+    Meal[Meal["\uC800\uB141"] = 2] = "\uC800\uB141";
+})(Meal || (Meal = {}));
+var gistOfMeal = [BREAKFAST_GIST_ID, LAUNCH_GIST_ID, DINNER_GIST_ID];
+function getMeal() {
+    return __awaiter(this, void 0, void 0, function () {
+        var data, mealServiceDietInfo, menuRegExp, result, i, match, MAX_ONE_LINE_LENGTH, count;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, node_fetch_1["default"]("https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=ecabe857ea114a09a0db1163ae5fa947&Type=JSON&ATPT_OFCDC_SC_CODE=" + ATPT_OFCDC_SC_CODE + "&SD_SCHUL_CODE=" + SD_SCHUL_CODE + "&MLSV_YMD=" + MLSV_YMD)];
+                case 1:
+                    data = _a.sent();
+                    return [4 /*yield*/, data.json()];
+                case 2:
+                    mealServiceDietInfo = (_a.sent()).mealServiceDietInfo;
+                    menuRegExp = /(?<menu>[가-힣]+[/]*[가-힣]+(?=[\d.]*[<br\/>]*))/g;
+                    result = ['', '', ''];
+                    for (i = 0; i < 3; i++) {
+                        match = void 0;
+                        if (!mealServiceDietInfo[1].row[i]) {
+                            result[i] += '급식이 없어연';
+                            break;
+                        }
+                        MAX_ONE_LINE_LENGTH = 29;
+                        count = 0;
+                        while ((match = menuRegExp.exec(mealServiceDietInfo[1].row[i].DDISH_NM))) {
+                            if ((result[i] + match.groups.menu).length + count >
+                                (count + 1) * MAX_ONE_LINE_LENGTH) {
+                                result[i] += '\n';
+                                count++;
+                            }
+                            else if (match.index !== 0) {
+                                result[i] += '/';
+                            }
+                            result[i] += match.groups.menu.replace('/', '&');
+                        }
+                    }
+                    return [2 /*return*/, result];
+            }
+        });
+    });
+}
+function getGist(gistId) {
+    return __awaiter(this, void 0, void 0, function () {
+        var files, fileName, e_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, octokit.gists.get({
+                            gist_id: gistId
+                        })];
+                case 1:
+                    files = (_a.sent()).data.files;
+                    fileName = Object.keys(files)[0];
+                    return [2 /*return*/, fileName];
+                case 2:
+                    e_1 = _a.sent();
+                    console.error("Not found gist\n" + e_1);
+                    throw e_1;
+                case 3: return [2 /*return*/];
+            }
+        });
+    });
+}
+function updateGist(_a) {
+    var gistId = _a.gistId, fileName = _a.fileName, newFileName = _a.newFileName, content = _a.content;
+    return __awaiter(this, void 0, void 0, function () {
+        var e_2;
+        var _b;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0:
+                    _c.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, octokit.gists.update({
+                            gist_id: gistId,
+                            files: (_b = {},
+                                _b[fileName] = {
+                                    filename: newFileName,
+                                    content: content
+                                },
+                                _b)
+                        })];
+                case 1:
+                    _c.sent();
+                    return [3 /*break*/, 3];
+                case 2:
+                    e_2 = _c.sent();
+                    console.error("Unable to update gist\n" + e_2);
+                    throw e_2;
+                case 3: return [2 /*return*/];
+            }
+        });
+    });
+}
 (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var octokit, files, fileName, data, mealServiceDietInfo, menuRegExp, result, Meal, i, match, e_1;
-    var _a;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
+    var result, e_3;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
             case 0:
-                octokit = new rest_1.Octokit({
-                    auth: GH_TOKEN
-                });
-                _b.label = 1;
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, getMeal()];
             case 1:
-                _b.trys.push([1, 6, , 7]);
-                return [4 /*yield*/, octokit.gists.get({
-                        gist_id: 'fcdc51abe32b2ccf38b74f7229571da2'
-                    })];
+                result = _a.sent();
+                result.forEach(function (content, index) { return __awaiter(void 0, void 0, void 0, function () {
+                    var fileName;
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0: return [4 /*yield*/, getGist(gistOfMeal[index])];
+                            case 1:
+                                fileName = _a.sent();
+                                return [4 /*yield*/, updateGist({
+                                        gistId: gistOfMeal[index],
+                                        fileName: fileName,
+                                        newFileName: Meal[index] + ' 🍚',
+                                        content: content
+                                    })];
+                            case 2:
+                                _a.sent();
+                                return [2 /*return*/];
+                        }
+                    });
+                }); });
+                return [3 /*break*/, 3];
             case 2:
-                files = (_b.sent()).data.files;
-                fileName = Object.keys(files)[0];
-                return [4 /*yield*/, node_fetch_1["default"]("https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=ecabe857ea114a09a0db1163ae5fa947&Type=JSON&ATPT_OFCDC_SC_CODE=" + ATPT_OFCDC_SC_CODE + "&SD_SCHUL_CODE=" + SD_SCHUL_CODE + "&MLSV_YMD=" + MLSV_YMD)];
-            case 3:
-                data = _b.sent();
-                return [4 /*yield*/, data.json()];
-            case 4:
-                mealServiceDietInfo = (_b.sent()).mealServiceDietInfo;
-                menuRegExp = /(?<menu>[가-힣]+[/]*[가-힣]+(?=[\d.]+[<br\/>]*))/g;
-                result = ['', '', ''];
-                Meal = void 0;
-                (function (Meal) {
-                    Meal[Meal["\uC544\uCE68"] = 0] = "\uC544\uCE68";
-                    Meal[Meal["\uC810\uC2EC"] = 1] = "\uC810\uC2EC";
-                    Meal[Meal["\uC800\uB141"] = 2] = "\uC800\uB141";
-                })(Meal || (Meal = {}));
-                for (i = 0; i < 3; i++) {
-                    match = void 0;
-                    result[i] += Meal[i] + " - ";
-                    if (!mealServiceDietInfo[1].row[i]) {
-                        result[i] += '급식이 없어연';
-                        break;
-                    }
-                    while ((match = menuRegExp.exec(mealServiceDietInfo[1].row[i].DDISH_NM))) {
-                        result[i] += match.groups.menu + ',';
-                    }
-                }
-                return [4 /*yield*/, octokit.gists.update({
-                        gist_id: GIST_ID,
-                        files: (_a = {},
-                            _a[fileName] = {
-                                filename: '오늘의 급식 🍚',
-                                content: result.join('\n')
-                            },
-                            _a)
-                    })];
-            case 5:
-                _b.sent();
-                return [3 /*break*/, 7];
-            case 6:
-                e_1 = _b.sent();
-                console.error("Unable to update gist\n" + e_1);
-                throw e_1;
-            case 7: return [2 /*return*/];
+                e_3 = _a.sent();
+                console.error("Error main \n" + e_3);
+                throw e_3;
+            case 3: return [2 /*return*/];
         }
     });
 }); })();
