@@ -5,7 +5,7 @@ import { resolve } from 'path';
 
 config({ path: resolve(process.cwd(), '.env') });
 
-const { GITHUB_TOKEN, GIST_ID } = process.env;
+const { GH_TOKEN, GIST_ID } = process.env;
 
 const getFormatDate = (date: Date) => {
   const year = date.getFullYear();
@@ -26,7 +26,7 @@ const MLSV_YMD = getFormatDate(new Date());
 
 (async () => {
   const octokit = new Octokit({
-    auth: GITHUB_TOKEN,
+    auth: GH_TOKEN,
   });
 
   try {
