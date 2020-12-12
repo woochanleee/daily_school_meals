@@ -991,7 +991,7 @@ function getMeal() {
                         MAX_ONE_LINE_LENGTH = 39;
                         count = 0;
                         while ((match = menuRegExp.exec(mealServiceDietInfo[1].row[i].DDISH_NM))) {
-                            if ((result[i] + match.groups.menu).length + count >
+                            if ((result[i] + match.groups.menu + '/').length + count >
                                 (count + 1) * MAX_ONE_LINE_LENGTH) {
                                 result[i] += '\n';
                                 count++;
