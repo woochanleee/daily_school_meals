@@ -13,4 +13,6 @@ jobs:
         uses: woochanleee/daily_school_meals@main
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          GIST_ID: ${{ secrets.GIST_ID }}
+          BREAKFAST_GIST_ID: ${{ secrets.BREAKFAST_GIST_ID }}
+          LAUNCH_GIST_ID: ${{ secrets.LAUNCH_GIST_ID }}
+          DINNER_GIST_ID: ${{ secrets.DINNER_GIST_ID }}  
