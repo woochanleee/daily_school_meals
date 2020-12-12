@@ -1,5 +1,9 @@
 import { Octokit } from '@octokit/rest';
 import fetch from 'node-fetch';
+import { config } from 'dotenv';
+import { resolve } from 'path';
+
+config({ path: resolve(process.cwd(), '.env') });
 
 const { GITHUB_TOKEN, GIST_ID } = process.env;
 
