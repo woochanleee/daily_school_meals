@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="./docs/service.png" alt="서비스 사진" width="500">
+    <img src="./docs/service.png" alt="서비스 사진">
   <h3 align="center">📌✨오늘의 급식</h3>
 </p>
 
@@ -59,8 +59,7 @@ Synchronized at 00:00 time every day.
 ### Find your school code
 
 - Open this site -> [https://open.neis.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=OPEN17320190722180924242823&infSeq=1](https://open.neis.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=OPEN17320190722180924242823&infSeq=1)
-- Search Your School.
-- ![](./docs/school_code.png)
+- Search Your School.![](./docs/school_code.png)
 - Memorize **시도교육청코드**, **표준학교코드**
 
 ### Edit `src/index.ts`
