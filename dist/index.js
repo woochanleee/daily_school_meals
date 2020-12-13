@@ -1688,7 +1688,7 @@ function getMeal() {
                             result[i] += '급식이 없어연';
                             break;
                         }
-                        MAX_ONE_LINE_LENGTH = 30;
+                        MAX_ONE_LINE_LENGTH = 28;
                         count = 0;
                         while ((match = menuRegExp.exec(mealServiceDietInfo[1].row[i].DDISH_NM))) {
                             if ((result[i] + match.groups.menu + '/').length + count >
