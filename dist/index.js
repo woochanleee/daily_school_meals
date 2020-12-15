@@ -1652,7 +1652,7 @@ var dotenv_1 = __webpack_require__(63);
 var path_1 = __webpack_require__(622);
 var moment = __webpack_require__(717);
 dotenv_1.config({ path: __webpack_require__.ab + ".env" });
-var _a = process.env, GH_TOKEN = _a.GH_TOKEN, BREAKFAST_GIST_ID = _a.BREAKFAST_GIST_ID, LAUNCH_GIST_ID = _a.LAUNCH_GIST_ID, DINNER_GIST_ID = _a.DINNER_GIST_ID;
+var _a = process.env, GH_TOKEN = _a.GH_TOKEN, GIST_ID = _a.GIST_ID;
 // 시도교육청코드 ex) 대전: G10
 var ATPT_OFCDC_SC_CODE = 'G10';
 // 표준학교코드 ex) 대덕소프트웨어마이스터고등학교: 7430310
@@ -1662,13 +1662,6 @@ var MLSV_YMD = moment.tz('Asia/Seoul').format('YYYYMMDD');
 var octokit = new rest_1.Octokit({
     auth: GH_TOKEN
 });
-var Meal;
-(function (Meal) {
-    Meal[Meal["\uC544\uCE68"] = 0] = "\uC544\uCE68";
-    Meal[Meal["\uC810\uC2EC"] = 1] = "\uC810\uC2EC";
-    Meal[Meal["\uC800\uB141"] = 2] = "\uC800\uB141";
-})(Meal || (Meal = {}));
-var gistOfMeal = [BREAKFAST_GIST_ID, LAUNCH_GIST_ID, DINNER_GIST_ID];
 function getMeal() {
     return __awaiter(this, void 0, void 0, function () {
         var data, mealServiceDietInfo, menuRegExp, result, i, match, MAX_ONE_LINE_LENGTH, count;
@@ -1681,7 +1674,7 @@ function getMeal() {
                 case 2:
                     mealServiceDietInfo = (_a.sent()).mealServiceDietInfo;
                     menuRegExp = /(?<menu>[가-힣]+[/]*[가-힣]+(?=[\d.]*[<br\/>]*))/g;
-                    result = ['', '', ''];
+                    result = ['🍚 아침 🍚\n', '🍚 점심 🍚\n', '🍚 저녁 🍚\n'];
                     for (i = 0; i < 3; i++) {
                         match = void 0;
                         if (!mealServiceDietInfo[1].row[i]) {
@@ -1691,7 +1684,9 @@ function getMeal() {
                         MAX_ONE_LINE_LENGTH = 28;
                         count = 0;
                         while ((match = menuRegExp.exec(mealServiceDietInfo[1].row[i].DDISH_NM))) {
-                            if ((result[i] + match.groups.menu + '/').length + count >
+                            if ((result[i].slice(result[i].indexOf('\n') + 1) + match.groups.menu + '/')
+                                .length +
+                                count >
                                 (count + 1) * MAX_ONE_LINE_LENGTH) {
                                 result[i] += '\n';
                                 count++;
@@ -1702,7 +1697,7 @@ function getMeal() {
                             result[i] += match.groups.menu.replace('/', '&');
                         }
                     }
-                    return [2 /*return*/, result];
+                    return [2 /*return*/, result.join('\n\n')];
             }
         });
     });
@@ -1761,39 +1756,31 @@ function updateGist(_a) {
     });
 }
 (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var result, e_3;
+    var result, fileName, e_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 2, , 3]);
+                _a.trys.push([0, 4, , 5]);
                 return [4 /*yield*/, getMeal()];
             case 1:
                 result = _a.sent();
-                result.forEach(function (content, index) { return __awaiter(void 0, void 0, void 0, function () {
-                    var fileName;
-                    return __generator(this, function (_a) {
-                        switch (_a.label) {
-                            case 0: return [4 /*yield*/, getGist(gistOfMeal[index])];
-                            case 1:
-                                fileName = _a.sent();
-                                return [4 /*yield*/, updateGist({
-                                        gistId: gistOfMeal[index],
-                                        fileName: fileName,
-                                        newFileName: Meal[index] + ' 🍚',
-                                        content: content
-                                    })];
-                            case 2:
-                                _a.sent();
-                                return [2 /*return*/];
-                        }
-                    });
-                }); });
-                return [3 /*break*/, 3];
+                return [4 /*yield*/, getGist(GIST_ID)];
             case 2:
+                fileName = _a.sent();
+                return [4 /*yield*/, updateGist({
+                        gistId: GIST_ID,
+                        fileName: fileName,
+                        newFileName: '급식 🗒',
+                        content: result
+                    })];
+            case 3:
+                _a.sent();
+                return [3 /*break*/, 5];
+            case 4:
                 e_3 = _a.sent();
                 console.error("Error main \n" + e_3);
                 throw e_3;
-            case 3: return [2 /*return*/];
+            case 5: return [2 /*return*/];
         }
     });
 }); })();
