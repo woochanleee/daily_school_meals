@@ -1673,7 +1673,7 @@ function getMeal() {
                     return [4 /*yield*/, data.json()];
                 case 2:
                     mealServiceDietInfo = (_a.sent()).mealServiceDietInfo;
-                    menuRegExp = /(?<menu>[가-힣]+[/]*[가-힣]+(?=[\d.]*[<br\/>]*))/g;
+                    menuRegExp = /(?<menu>[가-힣]+[/]*[가-힣]*(?=[\d.]*[<br\/>]*))/g;
                     result = ['🍚 아침 🍚\n', '🍚 점심 🍚\n', '🍚 저녁 🍚\n'];
                     for (i = 0; i < 3; i++) {
                         match = void 0;
@@ -1684,10 +1684,7 @@ function getMeal() {
                         MAX_ONE_LINE_LENGTH = 28;
                         count = 0;
                         while ((match = menuRegExp.exec(mealServiceDietInfo[1].row[i].DDISH_NM))) {
-                            if ((result[i].slice(result[i].indexOf('\n') + 1) + match.groups.menu + '/')
-                                .length +
-                                count >
-                                (count + 1) * MAX_ONE_LINE_LENGTH) {
+                            if ((result[i].slice(result[i].indexOf('\n') + 1) + match.groups.menu + '/').length + count > (count + 1) * MAX_ONE_LINE_LENGTH) {
                                 result[i] += '\n';
                                 count++;
                             }

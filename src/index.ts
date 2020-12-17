@@ -26,7 +26,7 @@ async function getMeal() {
     `https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=ecabe857ea114a09a0db1163ae5fa947&Type=JSON&ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${SD_SCHUL_CODE}&MLSV_YMD=${MLSV_YMD}`
   );
   const { mealServiceDietInfo } = await data.json();
-  const menuRegExp = /(?<menu>[가-힣]+[/]*[가-힣]+(?=[\d.]*[<br\/>]*))/g;
+  const menuRegExp = /(?<menu>[가-힣]+[/]*[가-힣]*(?=[\d.]*[<br\/>]*))/g;
   const result = ['🍚 아침 🍚\n', '🍚 점심 🍚\n', '🍚 저녁 🍚\n'];
 
   for (let i = 0; i < 3; i++) {
@@ -41,12 +41,7 @@ async function getMeal() {
     let count = 0;
 
     while ((match = menuRegExp.exec(mealServiceDietInfo[1].row[i].DDISH_NM))) {
-      if (
-        (result[i].slice(result[i].indexOf('\n') + 1) + match.groups.menu + '/')
-          .length +
-          count >
-        (count + 1) * MAX_ONE_LINE_LENGTH
-      ) {
+      if ((result[i].slice(result[i].indexOf('\n') + 1) + match.groups.menu + '/').length + count > (count + 1) * MAX_ONE_LINE_LENGTH) {
         result[i] += '\n';
         count++;
       } else if (match.index !== 0) {
@@ -55,6 +50,7 @@ async function getMeal() {
       result[i] += match.groups.menu.replace('/', '&');
     }
   }
+
   return result.join('\n\n');
 }
 
@@ -80,12 +76,7 @@ interface UpdateGistOption {
   content: string;
 }
 
-async function updateGist({
-  gistId,
-  fileName,
-  newFileName,
-  content,
-}: UpdateGistOption) {
+async function updateGist({ gistId, fileName, newFileName, content }: UpdateGistOption) {
   try {
     await octokit.gists.update({
       gist_id: gistId,
