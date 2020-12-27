@@ -1675,6 +1675,9 @@ function getMeal() {
                     mealServiceDietInfo = (_a.sent()).mealServiceDietInfo;
                     menuRegExp = /(?<menu>[가-힣]+[/]*[가-힣]*(?=[\d.]*[<br\/>]*))/g;
                     result = ['🍚 아침 🍚\n', '🍚 점심 🍚\n', '🍚 저녁 🍚\n'];
+                    if (!mealServiceDietInfo) {
+                        return [2 /*return*/, '해당하는 데이터가 없습니다.'];
+                    }
                     for (i = 0; i < 3; i++) {
                         match = void 0;
                         if (!mealServiceDietInfo[1].row[i]) {
